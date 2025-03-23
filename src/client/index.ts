@@ -40,7 +40,14 @@ if (Config.EnableNuiCommand) {
     });
 }
 
-const fishingManager = new FishingManager();
+export const fishingManager = new FishingManager();
+
+on('resourceStop', (resourceName: string) => {
+    if (resourceName === cache.resource) {
+        DeleteObject(fishingManager['rodObj']);
+        DeletePed(fishingManager['managerPed']);
+    }
+})
 
 
 

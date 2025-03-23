@@ -4,7 +4,6 @@ import * as lib from '@overextended/ox_lib/client';
 
 
 export class FishingManager {
-    isRunning: boolean = false;
     private managerPed: number;
     private rodObj: number;
 
