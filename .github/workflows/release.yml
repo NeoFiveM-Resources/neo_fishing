@@ -1,0 +1,110 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    create-release:
+        name: Build and Create Tagged Release
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Install archive tools
+                run: sudo apt install zip
+
+            -   name: Checkout source code
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+                    ref: ${{ github.event.repository.default_branch }}
+
+            -   name: Install pnpm
+                uses: pnpm/action-setup@v4.0.0
+                with:
+                    version: 9
+
+            -   name: Get variables
+                id: get_vars
+                run: |
+                    echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+                    echo "DATE=$(date +'%D')" >> $GITHUB_ENV
+                    echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+                    echo "RESOURCE_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+                    echo "GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
+                    echo "GITHUB_REPOSITORY=${{ github.repository }}" >> $GITHUB_ENV
+
+            -   name: Setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 18
+                    cache: 'pnpm'
+                    cache-dependency-path: 'pnpm-lock.yaml'
+
+            -   name: Install dependencies
+                run: pnpm i --frozen-lockfile
+
+            -   name: Bump package version
+                run: |
+                    git config --global user.name "GitHub Actions"
+                    git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    pnpm version ${{ github.ref_name }} --git-tag-version false
+
+            -   name: Run build
+                run: pnpm build
+
+            -   name: Update repository
+                run: |
+                    git add .
+                    git commit -am '${{ github.ref_name }}'
+                    git push 
+
+            -   name: Extract latest commit messages
+                run: git log --pretty=format:"%H - %s" -n 10 > changelog_updates.txt
+
+            -   name: Clone external repository
+                env:
+                    GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+                run: |
+                    git clone https://x-access-token:$GH_TOKEN@github.com/Vidkol18/vidkol18.github.io.git
+                    cd external-repo
+                    git config --global user.name "GitHub Actions"
+                    git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            -   name: Install Node.js
+                uses: actions/setup-node@v18
+
+            -   name: Update changelog in external repo
+                env:
+                    RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+                    GITHUB_REPOSITORY_OWNER: ${{ env.GITHUB_REPOSITORY_OWNER }}
+                    GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
+                run: node scripts/updateChangelog.js
+
+
+            -   name: Commit and push changes to external repo
+                env:
+                    GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+                run: |
+                    cd external-repo
+                    git add versions.json
+                    git commit -m "Auto-update changelog for ${{ env.RESOURCE_NAME }} - ${{ env.RELEASE_VERSION }}"
+                    git push origin main
+
+            -   name: Bundle files
+                run: |
+                    zip -r ${{ github.event.repository.name }}.zip . -x "./.*" "./node_modules/*" "./scripts/*" "./src/*" "./web/*" "./tsconfig.json" "./pnpm-lock.yaml" "./package.json" "./eslint.config.js"
+
+            -   name: Create Release
+                uses: 'marvinpinto/action-automatic-releases@v1.2.1'
+                id: auto_release
+                with:
+                    repo_token: '${{ secrets.GITHUB_TOKEN }}'
+                    title: '${{ env.RELEASE_VERSION }}'
+                    prerelease: false
+                    files: ${{ github.event.repository.name }}.zip
+
+                env:
+                    CI: false
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

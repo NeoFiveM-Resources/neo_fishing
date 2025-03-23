@@ -1,0 +1,8 @@
+{
+    "_comment": "Do not remove Setup section, it is required for the script to work",
+    "Setup": {
+        "target": "ox_target",
+        "notify": "ox_lib"
+    },
+    "EnableNuiCommand": true
+}
