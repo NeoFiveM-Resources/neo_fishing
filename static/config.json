@@ -4,5 +4,168 @@
         "target": "ox_target",
         "notify": "ox_lib"
     },
-    "EnableNuiCommand": true
+    "Debug": true,
+    "EnableNuiCommand": true,
+    "PedData": {
+        "model": "cs_hunter",
+        "coords": {
+            "x": -2077.74,
+            "y": 2604.29,
+            "z": 2.02,
+            "heading": 291.25
+        },
+        "target": {
+            "label": "Speak with Fisherman",
+            "icon": "fa-solid fa-comment"
+        },
+        "blip": {
+            "enabled": true,
+            "scale": 1.0,
+            "sprite": 762,
+            "color": 0,
+            "title": "Fisherman"
+        }
+    },
+    "FishArea": {
+        "FreshWater": [
+            "LAGO",
+            "ZANCUDO",
+            "ALAMO",
+            "LACT",
+            "CCREAK"
+        ],
+        "SaltWater": [
+            "OCEANA",
+            "PALCOV",
+            "TERMINA",
+            "ELYSIAN",
+            "NCHU"
+        ]
+    },
+    "FishData": {
+        "FreshWater": [
+            {
+                "name": "common_carp",
+                "rarity": 0.8
+            },
+            {
+                "name": "perch",
+                "rarity": 0.7
+            },
+            {
+                "name": "catfish",
+                "rarity": 0.7
+            },
+            {
+                "name": "largemouth_bass",
+                "rarity": 0.6
+            },
+            {
+                "name": "bluegill",
+                "rarity": 0.6
+            },
+            {
+                "name": "tilapia",
+                "rarity": 0.6
+            },
+            {
+                "name": "brown_trout",
+                "rarity": 0.5
+            },
+            {
+                "name": "cutthroat_trout",
+                "rarity": 0.5
+            },
+            {
+                "name": "striped_bass",
+                "rarity": 0.5
+            },
+            {
+                "name": "coho_salmon",
+                "rarity": 0.4
+            },
+            {
+                "name": "black_crappie",
+                "rarity": 0.4
+            },
+            {
+                "name": "chinook_salmon",
+                "rarity": 0.3
+            },
+            {
+                "name": "white_sturgeon",
+                "rarity": 0.3
+            }
+        ],
+        "SaltWater": [
+            {
+                "name": "anchovy",
+                "rarity": 0.8
+            },
+            {
+                "name": "mackerel",
+                "rarity": 0.6
+            },
+            {
+                "name": "spot_prawn",
+                "rarity": 0.6
+            },
+            {
+                "name": "codfish",
+                "rarity": 0.6
+            },
+            {
+                "name": "pacific_sardine",
+                "rarity": 0.7
+            },
+            {
+                "name": "mahi_mahi",
+                "rarity": 0.5
+            },
+            {
+                "name": "rainbow_trout",
+                "rarity": 0.5
+            },
+            {
+                "name": "giant_seabass",
+                "rarity": 0.4
+            },
+            {
+                "name": "pacific_halibut",
+                "rarity": 0.4
+            },
+            {
+                "name": "red_snapper",
+                "rarity": 0.4
+            },
+            {
+                "name": "white_seabass",
+                "rarity": 0.4
+            },
+            {
+                "name": "redfish",
+                "rarity": 0.3
+            },
+            {
+                "name": "stingray",
+                "rarity": 0.3
+            },
+            {
+                "name": "grouper",
+                "rarity": 0.3
+            },
+            {
+                "name": "kingcrab",
+                "rarity": 0.2
+            },
+            {
+                "name": "lobster",
+                "rarity": 0.2
+            },
+            {
+                "name": "yellowfin_tuna",
+                "rarity": 0.2
+            }
+        ]
+    }
 }

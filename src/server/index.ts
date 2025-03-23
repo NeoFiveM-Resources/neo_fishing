@@ -4,6 +4,7 @@ import {initializeServerFramework, initializeServerInventory} from "./bridge/ini
 import {ServerInventory} from "./bridge/inventory/serverInventory";
 import {ServerFramework} from "./bridge/framework/serverFramework";
 import {Greetings} from "../common";
+import {VersionChecker} from './version/versionChecker';
 
 //##[DO NOT REMOVE]################
 const CURRENT_VERSION = GetResourceMetadata(cache.resource, 'version', 0);
@@ -27,3 +28,5 @@ if (Config.EnableNuiCommand) {
         emitNet(`${cache.resource}:openNui`, playerId);
     });
 }
+
+

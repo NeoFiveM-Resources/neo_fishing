@@ -52,7 +52,7 @@ declare interface OxCharacterAccount {
     id: number;
 }
 
-interface QbCore {
+declare interface QbCore {
     Player: QbPlayer;
     Shared: QbShared;
     Functions: QbCoreFunctions;

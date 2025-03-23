@@ -20,7 +20,7 @@ interface VersionData {
     [resourceName: string]: Resource;
 }
 
-class VersionChecker {
+export class VersionChecker {
     private currentVersion: string;
     private versionUrl: string;
     private resourceName: string;

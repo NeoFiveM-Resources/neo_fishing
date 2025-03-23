@@ -11,6 +11,7 @@ import {
     initializeTarget
 } from "./bridge/initialization";
 import {Greetings} from "../common";
+import {FishingManager} from "./fishingManager";
 
 //##[DO NOT REMOVE]################
 const clientInventory: ClientInventory = initializeClientInventory();
@@ -38,4 +39,14 @@ if (Config.EnableNuiCommand) {
         cb({});
     });
 }
+
+const fishingManager = new FishingManager();
+
+
+
+
+
+
+
+
 
